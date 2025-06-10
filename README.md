@@ -18,14 +18,7 @@ This repository contains a Bash script (`spdk_setup.sh`) to automate the install
     ```
     You can find your device's IDs using `lspci -nn | grep -i nvme`.
 
-  - **NVME_BDF:**  
-    Update the `NVME_BDF` variable to match your NVMe device's PCI address.  
-    Example:  
-    ```bash
-    NVME_BDF="0000:01:00.0"
-    ```
-
-  - **SPDK_PARENT_DIR, UBUNTU_USER:**  
+  - **[Optional] SPDK_PARENT_DIR, UBUNTU_USER:**  
     Change these variables if your username or home directory is different.
 
 - **System Requirements:**  
