@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Author:    Akash Kumar Singh
+# Email:     akash.singh@sandisk.com
+
 # Script to set up SPDK on Ubuntu with Python virtual environment and verify the setup
 # Run as root: sudo ./spdk_setup_aks.sh
 # Assumes NVMe device at 0000:01:00.0 (SanDisk WD PC SN810, vendor:device 15b7:5011)
