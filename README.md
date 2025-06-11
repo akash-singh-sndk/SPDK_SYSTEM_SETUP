@@ -16,7 +16,7 @@ This repository contains a Bash script (`spdk_setup.sh`) to automate the install
     ```bash
     VENDOR_DEVICE="15b7 5011"
     ```
-    You can find your device's IDs using `lspci -nn | grep -i nvme`.
+    You can find your device's IDs using `lspci -nn | grep "Non-Volatile memory controller"`.
 
   - **[Optional] SPDK_PARENT_DIR, UBUNTU_USER:**  
     Change these variables if your username or home directory is different.
