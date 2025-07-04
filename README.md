@@ -11,12 +11,13 @@ This repository contains a Bash script (`spdk_setup.sh`) to automate the install
 
 - **Edit the script before running:**  
   - **VENDOR_DEVICE:**  
-    Update the `VENDOR_DEVICE` variable in the script to match your NVMe device's vendor and device ID.  
+    Update the `VENDOR_DEVICE` and `BDF` variable in the script to match your NVMe device's vendor and device BDF.  
     Example:  
     ```bash
-    VENDOR_DEVICE="15b7 5011"
+    NVME_BDF="0000:03:00.0"
+    VENDOR_DEVICE="15b7 5045"
     ```
-    You can find your device's IDs using `lspci -nn | grep "Non-Volatile memory controller"`.
+    You can find your device's IDs using `lspci -nn | grep "Non-Volatile memory controller"` & for BDF `sudo nvme list`.
 
   - **[Optional] SPDK_PARENT_DIR, UBUNTU_USER:**  
     Change these variables if your username or home directory is different.
