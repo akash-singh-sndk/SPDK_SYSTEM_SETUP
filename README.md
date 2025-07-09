@@ -10,20 +10,20 @@ This repository contains a Bash script (`spdk_setup.sh`) to automate the install
   You must run the script as root (use `sudo`).
 
 - **Edit the script before running:**  
-  - **VENDOR_DEVICE:**  
-    Update the `VENDOR_DEVICE` and `BDF` variable in the script to match your NVMe device's vendor and device BDF.  
+  - **Config:**  
+    Update the `SPDK_PARENT_DIR`, `SPDK_DIR`, `ALMA_USER`, `VENDOR_DEVICE` & `BDF` variable in the script to match your NVMe device's vendor and device BDF.  
     Example:  
     ```bash
+    SPDK_PARENT_DIR="/home/aks/AKS"
+    SPDK_DIR="/home/aks/AKS/spdk"
+    ALMA_USER="aks"
     NVME_BDF="0000:03:00.0"
-    VENDOR_DEVICE="15b7 5045"
+    VENDOR_DEVICE="15b7:5045"
     ```
-    You can find your device's IDs using `lspci -nn | grep "Non-Volatile memory controller"` & for BDF `sudo nvme list`.
-
-  - **[Optional] SPDK_PARENT_DIR, UBUNTU_USER:**  
-    Change these variables if your username or home directory is different.
+    You can find your `VENDOR_DEVICE` IDs using `lspci -nn | grep "Non-Volatile memory controller"` & for `BDF` run `sudo nvme list`.
 
 - **System Requirements:**  
-  - Ubuntu (tested on 20.04/22.04)
+  - Ubuntu (tested on 20.04/22.04) and Alma Linux (tested on v10.0/v9.0)
   - Internet access for package installation and git clone
   - Sufficient privileges to modify system configuration (hugepages, IOMMU, VFIO, etc.)
 
@@ -34,16 +34,16 @@ This repository contains a Bash script (`spdk_setup.sh`) to automate the install
 1. **Clone this repository or copy the script to your Ubuntu machine.**
 
 2. **Edit the script:**  
-   Open `spdk_setup.sh` and update the variables as described above.
+   Open `<spdk_setup_script>.sh` and update the variables as described above.
 
 3. **Make the script executable:**
    ```bash
-   chmod +x spdk_setup.sh
+   chmod +x <spdk_setup_script>.sh
    ```
 
 4. **Run the script as root:**
    ```bash
-   sudo ./spdk_setup.sh
+   sudo ./<spdk_setup_script>.sh
    ```
 
 5. **Follow any reboot instructions:**  
