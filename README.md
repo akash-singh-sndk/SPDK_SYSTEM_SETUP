@@ -29,6 +29,66 @@ This repository contains a Bash script (`spdk_setup.sh`) to automate the install
 
 ---
 
+# IMPORTANT NOTE FOR VIRTUAL MACHINE USERS
+
+## NVMe Configuration Requirements for VMs
+
+**⚠️ CRITICAL REQUIREMENT: If you are running this SPDK setup script on a Virtual Machine (VM), you MUST configure your VM with at least 2 separate NVMe hard disks before running the script.**
+
+### VM NVMe Disk Configuration:
+
+1. **Primary NVMe Disk (Disk 1):**
+   - **Purpose**: Operating System installation
+   - **Size**: Minimum 20GB (recommended 40GB+)
+   - **Usage**: Contains Alma Linux OS, root filesystem, swap, and boot partitions
+   - **Status**: Will remain bound to the OS and cannot be used for SPDK
+
+2. **Secondary NVMe Disk (Disk 2):**
+   - **Purpose**: SPDK configuration and testing
+   - **Size**: Minimum 4GB (recommended 10GB+)
+   - **Usage**: Will be bound to SPDK for high-performance storage testing
+   - **Status**: Must be completely unused (no partitions, no filesystem)
+
+### Why This Configuration is Required:
+
+- **SPDK requires exclusive access** to NVMe devices for userspace drivers
+- **The script automatically detects and protects** the OS boot drive from SPDK binding
+- **Without a second NVMe disk**, SPDK will have no devices to bind to for testing
+- **Virtual environments** typically don't expose multiple NVMe devices by default
+
+### VM Platform Configuration:
+
+#### VMware vSphere/Workstation:
+1. Add a second virtual disk
+2. Set disk type to "NVMe"
+3. Ensure both disks use NVMe controller type
+
+#### KVM/QEMU:
+1. Add second disk with `-drive` parameter
+2. Use `if=none` and `nvme` device type
+3. Configure separate NVMe namespaces
+
+#### VirtualBox:
+1. Add second SATA/NVMe disk in VM settings
+2. Ensure VM has NVMe controller enabled
+3. Configure storage controller properly
+
+### Verification Before Running Script:
+
+Check your NVMe devices with:
+```bash
+nvme list
+```
+
+You should see at least 2 NVMe devices before proceeding with the script.
+
+### Script Behavior:
+- **Automatic Detection**: Script will identify the boot device and skip it
+- **Safe Binding**: Only unused NVMe devices will be bound to SPDK
+- **Graceful Fallback**: If only one NVMe device is found, script will complete setup but skip device binding tests
+
+**💡 TIP: If you only have one NVMe disk, the script will build SPDK successfully but you'll need to manually add a second NVMe disk later for full functionality testing.**
+
 ## 🚀 **How to Use**
 
 1. **Clone this repository or copy the script to your Ubuntu machine.**
